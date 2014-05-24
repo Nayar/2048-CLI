@@ -9,25 +9,56 @@ def pgrd(m):
         print "|%5s|%5s|%5s|%5s|"%(str(m[i][0]),str(m[i][1]),str(m[i][2]),str(m[i][3]))
         print "'-----'-----'-----'-----'"
 
-def move_column(m,col,direction = "up"):
+def move_column(m,col,direction):
    if(direction == "up"):
       start = 0
-      end = 4
+      end = 3
       increment = 1
       print "up"
       
    elif (direction == "down"):
-      start = 4 
+      start = 3 
       end = 0
       increment = -1
+      print "up"
     
-   for row in range (start,end):
+   for row in range(start,end+increment,increment):
       if(m[row][col] == ""):
-         for i in range(row,end,increment):
+         for i in range(row,end+increment,increment):
             if(m[i][col] != ""):
                m[row][col] = m[i][col]
                m[i][col] = ""
+               break
    
+def add_column(m,col,direction = "up"):
+   if(direction == "up"):
+      start = 0
+      increment = 1
+      print "up"
+      
+   elif (direction == "down"):
+      start = 3
+      increment = -1
+      
+   row = start
+   while(row <= 3 and direction == "up" or row >= 0 and direction == "down"):
+      merge = False
+      if(m[row][col] != ""):
+         i = row + increment
+         while(i <= 3 and direction == "up" or i >= 0 and direction == "down"):
+            print "r %d c %d" % (i,col)
+            if(m[i][col] != ""):
+               if(m[row][col] == m[i][col]):
+                  m[row][col] *= 2
+                  m[i][col] = ""
+                  merged = True
+                  i = i + 2 * increment
+               #break
+            i += increment
+      if(merge):
+         row = i + increment
+      else:
+         row += increment
     
 ls = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
@@ -52,80 +83,14 @@ while True:
 
     if act == '8':
         for col in range(4):
-            row = 0
-            while(row < 4):
-               merge = False
-               if(m[row][col] != ""):
-                  i = row+1
-                  while(i < 4):
-                     if(m[i][col] != ""):
-                        if(m[row][col] == m[i][col]):
-                           m[row][col] *= 2
-                           m[i][col] = ""
-                           merged = True
-                           i += 2
-                        break
-                     i += 1 
-               if(merge):
-                  row = i + 1
-               else:
-                  row += 1
+            add_column(m,col,"up")
             move_column(m,col,"up")   
 
     elif act == '2':
-        for k in range(3):
-            rg = (7-k )%4
-            for i in range(rg):
-                for j in range(4):
-                    rw = i
-                    cl = j
-
-                    dt = m[rw][cl]
-
-                    if m[rw+1][cl] == "":
-                        m[rw+1][cl] = m[rw][cl]
-                        m[rw][cl] = ""
-                    elif m[rw+1][cl] == dt:
-                        m[rw+1][cl] = dt * 2
-                        m[rw][cl] = ""
-                    else:
-                        pass
-    elif act == '4':
-        for k in range(3):
-            rg = (7-k )%4
-            for i in range(4):
-                for j in range(rg):
-                    rw = i
-                    cl =(j + 5 )%4 
-
-                    dt = m[rw][cl]
-
-                    if m[rw][cl-1] == "":
-                        m[rw][cl-1] = m[rw][cl]
-                        m[rw][cl] = ""
-                    elif m[rw][cl-1] == dt:
-                        m[rw][cl-1] = dt * 2
-                        m[rw][cl] = ""
-                    else:
-                        pass
-    elif act == '6':
-        for k in range(3):
-            rg = (7-k )%4
-            for i in range(4):
-                for j in range(rg):
-                    rw = i
-                    cl = j 
-
-                    dt = m[rw][cl]
-
-                    if m[rw][cl+1] == "":
-                        m[rw][cl+1] = m[rw][cl]
-                        m[rw][cl] = ""
-                    elif m[rw][cl+1] == dt:
-                        m[rw][cl+1] = dt * 2
-                        m[rw][cl] = ""
-                    else:
-                        pass
+        for col in range(4):
+            add_column(m,col,"down")
+            move_column(m,col,"down") 
+    
     else:
         pass
 
@@ -137,7 +102,11 @@ while True:
                 #print "blank %d" % ((i * 4) + j)
                 ls.append((i * 4) + j)
         
-    a = random.choice(ls)    
+    if(len(ls) == 0):
+       print "lose!!!!!!!!!!!!!!!"
+       break
+    
+    a = random.choice(ls)
 
     arw = a/4
     acl = a%4
