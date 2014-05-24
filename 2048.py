@@ -2,6 +2,7 @@ import os
 import random
 
 m = [[ "" for i in range(4)] for j in range(4)]
+changed = False
 
 def pgrd(m):
     print ",-----.-----.-----.-----."
@@ -10,6 +11,8 @@ def pgrd(m):
         print "'-----'-----'-----'-----'"
 
 def move_column(m,col,direction):
+   global changed
+   
    if(direction == "up"):
       start = 0
       end = 3
@@ -28,9 +31,11 @@ def move_column(m,col,direction):
             if(m[i][col] != ""):
                m[row][col] = m[i][col]
                m[i][col] = ""
+               changed = True
                break
             
 def move_row(m,row,direction):
+   global changed
    if(direction == "left"):
       start = 0
       end = 3
@@ -49,9 +54,11 @@ def move_row(m,row,direction):
             if(m[row][i] != ""):
                m[row][col] = m[row][i]
                m[row][i] = ""
+               changed = True
                break
    
 def add_column(m,col,direction = "up"):
+   global changed
    if(direction == "up"):
       start = 0
       increment = 1
@@ -73,6 +80,7 @@ def add_column(m,col,direction = "up"):
                   m[row][col] *= 2
                   m[row1][col] = ""
                   merged = True
+                  changed = True
                   row1= row1+ 2 * increment
                break
             row1+= increment
@@ -82,6 +90,7 @@ def add_column(m,col,direction = "up"):
          row += increment
          
 def add_row(m,row,direction):
+   global changed
    if(direction == "left"):
       start = 0
       increment = 1
@@ -103,6 +112,7 @@ def add_row(m,row,direction):
                   m[row][col] *= 2
                   m[row][col1] = ""
                   merged = True
+                  changed = True
                   col1= col1+ 2 * increment
                break
             col1+= increment
@@ -129,7 +139,7 @@ m[brw][bcl] = 2
 pgrd(m)
         
 while True:
-
+    changed = False
     act = raw_input("action num pad key : ")
 
     if act == '8':
@@ -159,19 +169,21 @@ while True:
     for i in range(4):
         for j in range(4):
             if m[i][j] == "":
-                #print "blank %d" % ((i * 4) + j)
                 ls.append((i * 4) + j)
+            
         
     if(len(ls) == 0):
        print "lose!!!!!!!!!!!!!!!"
        break
     
-    a = random.choice(ls)
+    if(changed):
+         a = random.choice(ls)
+         ls.remove(a)
 
-    arw = a/4
-    acl = a%4
+         arw = a/4
+         acl = a%4
 
-    m[arw][acl] = 2
+         m[arw][acl] = 2
     
     pgrd(m)
     
