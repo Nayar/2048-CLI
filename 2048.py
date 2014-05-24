@@ -10,9 +10,20 @@ def pgrd(m):
         print "'-----'-----'-----'-----'"
 
 def move_column(m,col,direction = "up"):
-   for row in range (4):
+   if(direction == "up"):
+      start = 0
+      end = 4
+      increment = 1
+      print "up"
+      
+   elif (direction == "down"):
+      start = 4 
+      end = 0
+      increment = -1
+    
+   for row in range (start,end):
       if(m[row][col] == ""):
-         for i in range(row,4):
+         for i in range(row,end,increment):
             if(m[i][col] != ""):
                m[row][col] = m[i][col]
                m[i][col] = ""
@@ -60,13 +71,6 @@ while True:
                else:
                   row += 1
             move_column(m,col,"up")   
-            
-            
-
-               
-               
-               
-            
 
     elif act == '2':
         for k in range(3):
