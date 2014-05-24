@@ -8,6 +8,8 @@ Screenshot
 Usage
 -----
 $ git clone https://github.com/Nayar/2048-CLI.git
+
 $ cd 2048-CLI
+
 $ python 2048.py
 
