@@ -65,16 +65,16 @@ def add_column(m,col,direction = "up"):
    while(row <= 3 and direction == "up" or row >= 0 and direction == "down"):
       merge = False
       if(m[row][col] != ""):
-         row1= row + increment
-         while(row1<= 3 and direction == "up" or row1>= 0 and direction == "down"):
-            print "r %d c %d" % (i,col)
-            if(m[i][col] != ""):
-               if(m[row][col] == m[i][col]):
+         row1 = row + increment
+         while(row1 <= 3 and direction == "up" or row1 >= 0 and direction == "down"):
+            print "r %d c %d" % (row1,col)
+            if(m[row1][col] != ""):
+               if(m[row][col] == m[row1][col]):
                   m[row][col] *= 2
-                  m[i][col] = ""
+                  m[row1][col] = ""
                   merged = True
                   row1= row1+ 2 * increment
-               #break
+               break
             row1+= increment
       if(merge):
          row = row1+ increment
@@ -92,19 +92,19 @@ def add_row(m,row,direction):
       increment = -1
       
    col = start
-   while(col <= 3 and direction == "up" or col >= 0 and direction == "down"):
+   while(col <= 3 and direction == "left" or col >= 0 and direction == "right"):
       merge = False
       if(m[row][col] != ""):
          col1= col + increment
-         while(col1<= 3 and direction == "up" or col1>= 0 and direction == "down"):
-            print "r %d c %d" % (i,col)
-            if(m[i][col] != ""):
-               if(m[row][col] == m[i][col]):
+         while(col1<= 3 and direction == "left" or col1>= 0 and direction == "right"):
+            print "r %d c %d" % (col1,col)
+            if(m[row][col1] != ""):
+               if(m[row][col] == m[row][col1]):
                   m[row][col] *= 2
-                  m[i][col] = ""
+                  m[row][col1] = ""
                   merged = True
                   col1= col1+ 2 * increment
-               #break
+               break
             col1+= increment
       if(merge):
          col = col1+ increment
@@ -134,22 +134,22 @@ while True:
 
     if act == '8':
         for col in range(4):
-            #add_column(m,col,"up")
+            add_column(m,col,"up")
             move_column(m,col,"up")   
 
     elif act == '2':
         for col in range(4):
-            #add_column(m,col,"down")
+            add_column(m,col,"down")
             move_column(m,col,"down") 
     
     elif act == '4':
         for row in range(4):
-            #add_row(m,row,"left")
+            add_row(m,row,"left")
             move_row(m,row,"left") 
             
     elif act == '6':
         for row in range(4):
-            #add_row(m,row,"right")
+            add_row(m,row,"right")
             move_row(m,row,"right") 
     else:
         pass
