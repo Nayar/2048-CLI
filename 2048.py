@@ -17,13 +17,11 @@ def move_column(m,col,direction):
       start = 0
       end = 3
       increment = 1
-      print "up"
       
    elif (direction == "down"):
       start = 3 
       end = 0
       increment = -1
-      print "up"
     
    for row in range(start,end+increment,increment):
       if(m[row][col] == ""):
@@ -40,13 +38,11 @@ def move_row(m,row,direction):
       start = 0
       end = 3
       increment = 1
-      print "left"
       
    elif (direction == "right"):
       start = 3 
       end = 0
       increment = -1
-      print "right"
     
    for col in range(start,end+increment,increment):
       if(m[row][col] == ""):
@@ -62,7 +58,6 @@ def add_column(m,col,direction = "up"):
    if(direction == "up"):
       start = 0
       increment = 1
-      print "up"
       
    elif (direction == "down"):
       start = 3
@@ -74,7 +69,6 @@ def add_column(m,col,direction = "up"):
       if(m[row][col] != ""):
          row1 = row + increment
          while(row1 <= 3 and direction == "up" or row1 >= 0 and direction == "down"):
-            print "r %d c %d" % (row1,col)
             if(m[row1][col] != ""):
                if(m[row][col] == m[row1][col]):
                   m[row][col] *= 2
@@ -94,7 +88,6 @@ def add_row(m,row,direction):
    if(direction == "left"):
       start = 0
       increment = 1
-      print "left"
       
    elif (direction == "right"):
       start = 3
@@ -106,7 +99,6 @@ def add_row(m,row,direction):
       if(m[row][col] != ""):
          col1= col + increment
          while(col1<= 3 and direction == "left" or col1>= 0 and direction == "right"):
-            print "r %d c %d" % (col1,col)
             if(m[row][col1] != ""):
                if(m[row][col] == m[row][col1]):
                   m[row][col] *= 2
