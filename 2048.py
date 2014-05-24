@@ -29,6 +29,27 @@ def move_column(m,col,direction):
                m[row][col] = m[i][col]
                m[i][col] = ""
                break
+            
+def move_row(m,row,direction):
+   if(direction == "left"):
+      start = 0
+      end = 3
+      increment = 1
+      print ""
+      
+   elif (direction == "right"):
+      start = 3 
+      end = 0
+      increment = -1
+      print "up"
+    
+   for col in range(start,end+increment,increment):
+      if(m[row][col] == ""):
+         for i in range(col,end+increment,increment):
+            if(m[i][col] != ""):
+               m[row][col] = m[i][col]
+               m[i][col] = ""
+               break
    
 def add_column(m,col,direction = "up"):
    if(direction == "up"):
@@ -44,19 +65,19 @@ def add_column(m,col,direction = "up"):
    while(row <= 3 and direction == "up" or row >= 0 and direction == "down"):
       merge = False
       if(m[row][col] != ""):
-         i = row + increment
-         while(i <= 3 and direction == "up" or i >= 0 and direction == "down"):
+         row1= row + increment
+         while(row1<= 3 and direction == "up" or row1>= 0 and direction == "down"):
             print "r %d c %d" % (i,col)
             if(m[i][col] != ""):
                if(m[row][col] == m[i][col]):
                   m[row][col] *= 2
                   m[i][col] = ""
                   merged = True
-                  i = i + 2 * increment
+                  row1= row1+ 2 * increment
                #break
-            i += increment
+            row1+= increment
       if(merge):
-         row = i + increment
+         row = row1+ increment
       else:
          row += increment
     
@@ -91,6 +112,15 @@ while True:
             add_column(m,col,"down")
             move_column(m,col,"down") 
     
+    elif act == '4':
+        for row in range(4):
+            add_row(m,row,"left")
+            move_column(m,row,"left") 
+            
+    elif act == '6':
+        for row in range(4):
+            add_row(m,row,"right")
+            move_column(m,row,"right") 
     else:
         pass
 
