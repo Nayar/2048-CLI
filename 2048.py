@@ -35,20 +35,20 @@ def move_row(m,row,direction):
       start = 0
       end = 3
       increment = 1
-      print ""
+      print "left"
       
    elif (direction == "right"):
       start = 3 
       end = 0
       increment = -1
-      print "up"
+      print "right"
     
    for col in range(start,end+increment,increment):
       if(m[row][col] == ""):
          for i in range(col,end+increment,increment):
-            if(m[i][col] != ""):
-               m[row][col] = m[i][col]
-               m[i][col] = ""
+            if(m[row][i] != ""):
+               m[row][col] = m[row][i]
+               m[row][i] = ""
                break
    
 def add_column(m,col,direction = "up"):
@@ -80,6 +80,36 @@ def add_column(m,col,direction = "up"):
          row = row1+ increment
       else:
          row += increment
+         
+def add_row(m,row,direction):
+   if(direction == "left"):
+      start = 0
+      increment = 1
+      print "left"
+      
+   elif (direction == "right"):
+      start = 3
+      increment = -1
+      
+   col = start
+   while(col <= 3 and direction == "up" or col >= 0 and direction == "down"):
+      merge = False
+      if(m[row][col] != ""):
+         col1= col + increment
+         while(col1<= 3 and direction == "up" or col1>= 0 and direction == "down"):
+            print "r %d c %d" % (i,col)
+            if(m[i][col] != ""):
+               if(m[row][col] == m[i][col]):
+                  m[row][col] *= 2
+                  m[i][col] = ""
+                  merged = True
+                  col1= col1+ 2 * increment
+               #break
+            col1+= increment
+      if(merge):
+         col = col1+ increment
+      else:
+         col += increment
     
 ls = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
@@ -104,23 +134,23 @@ while True:
 
     if act == '8':
         for col in range(4):
-            add_column(m,col,"up")
+            #add_column(m,col,"up")
             move_column(m,col,"up")   
 
     elif act == '2':
         for col in range(4):
-            add_column(m,col,"down")
+            #add_column(m,col,"down")
             move_column(m,col,"down") 
     
     elif act == '4':
         for row in range(4):
-            add_row(m,row,"left")
-            move_column(m,row,"left") 
+            #add_row(m,row,"left")
+            move_row(m,row,"left") 
             
     elif act == '6':
         for row in range(4):
-            add_row(m,row,"right")
-            move_column(m,row,"right") 
+            #add_row(m,row,"right")
+            move_row(m,row,"right") 
     else:
         pass
 
